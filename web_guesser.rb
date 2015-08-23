@@ -1,16 +1,26 @@
 require 'sinatra'
 require "sinatra/reloader"
-number = rand(100)
+
+
+
+NUMBER = rand(100)
+
 get '/' do
 	guess = params["guess"].to_i
-	if guess > (number+5)
-		message = "Way Too High!!\n\n"
-	elsif guess < (number-5)
-		message = "Way Too Low!!\n\n"
-	elsif guess > number
-		message = "Too High!\n\n"
-	elsif guess < number
-		message = "Too Low!\n\n"
+	message = check_guess(guess)
+	erb :index, :locals => {:number => NUMBER, :message => message}
+end
+
+def check_guess(guess)
+if guess > (NUMBER+5)
+		"Way Too High!!\n\n"
+	elsif guess < (NUMBER-5)
+		"Way Too Low!!\n\n"
+	elsif guess > NUMBER
+		"Too High!\n\n"
+	elsif guess < NUMBER
+		"Too Low!\n\n"
+	else
+		"The SECRET NUMBER is #{guess}"
 	end
-	erb :index, :locals => {:number => number, :message => message}
 end
